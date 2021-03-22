@@ -51,9 +51,10 @@ The project was developed through an TDD approach, thus, it contains a thorough 
 ## Autores
 
 * **Mateus Berardo** - *Autor* - [MatTerra](https://github.com/MatTerra)
-* ...
+* **Estevan Alexander** - *Autor* - [alexander-p30](https://github.com/alexander-p30)
+* **Lucas Azuma** - *Autor* - [lucasazuma](https://github.com/lucasazuma)
 
-Also check out the [contributors](graphs/contributors).
+Veja também os [contribuidores](graphs/contributors).
 
 ## License
 
