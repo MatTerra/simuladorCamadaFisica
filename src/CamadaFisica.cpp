@@ -18,6 +18,7 @@ void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
 
     switch (tipoDeDecodificacao) {
         case CODIFICACAO_BINARIA:
+            std::cout << "Camada fisica decodificando mensagem com codificação binaria" << std::endl;
             mensagemDecodificada = CamadaFisicaReceptoraDecodificacaoBinaria(
                     fluxoBrutoDeBits);
             break;
@@ -31,15 +32,16 @@ void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
 }
 
 void CamadaDeAplicacaoReceptora(std::string mensagem) {
-    std::cout << "Aplicação receptora recebeu a seguinte mensagem: <"
-              << mensagem << std::endl;
+    std::cout << "Aplicação receptora recebeu a seguinte mensagem: "
+              << '<'<< mensagem << '>' << std::endl;
 }
 
 void transmit(bitStream &fluxoBrutoDeBitsPontoA,
               bitStream &fluxoBrutoDeBitsPontoB) {
-    std::copy(fluxoBrutoDeBitsPontoA.begin(),
-              fluxoBrutoDeBitsPontoA.end(),
-              fluxoBrutoDeBitsPontoB);
+//    std::copy(fluxoBrutoDeBitsPontoA.begin(),
+//              fluxoBrutoDeBitsPontoA.end(),
+//              fluxoBrutoDeBitsPontoB);
+    fluxoBrutoDeBitsPontoB = fluxoBrutoDeBitsPontoA;
 }
 
 void MeioDeComunicacao(bitStream bits) {
@@ -62,12 +64,13 @@ bitStream toBinary(std::string input) {
 std::string fromBinary(bitStream bits){
     std::string output;
 
-    for (auto &byte : bits)
-        output.append(byte.to_string());
+    for (auto &byte : bits) {
+        const char c = char(byte.to_ulong());
+        output += c;
+    }
 
     return output;
 }
-
 
 void CamadaFisicaTransmissora(std::string quadro) {
     int tipoDeCodificacao = 0;
