@@ -1,3 +1,6 @@
+#ifndef CAMADAFISICA_H
+#define CAMADAFISICA_H
+
 #include <string>
 #include <bitset>
 #include <vector>
@@ -24,3 +27,5 @@ bitStream CamadaFisicaTransmissoraCodificacaoBipolar(std::string quadro);
 unsigned long getStringBinarySize(const std::string &quadro);
 
 bitStream toBinary(std::string input);
+
+#endif
