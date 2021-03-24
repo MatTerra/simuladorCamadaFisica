@@ -5,10 +5,8 @@ void CamadaDeAplicacaoReceptora(std::string mensagem);
 
 void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits);
 
-std::string CamadaFisicaReceptoraDecodificacaoBinaria();
-
 void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
-    int tipoDeDecodificacao = 0;
+    int tipoDeDecodificacao = 1;
     std::string mensagemDecodificada;
     
     std::cout << "Camada física receptora recebeu o seguinte fluxo de bits: ";
@@ -72,7 +70,7 @@ std::string fromBinary(bitStream bits){
 }
 
 void CamadaFisicaTransmissora(std::string quadro) {
-    int tipoDeCodificacao = 0;
+    int tipoDeCodificacao = 1;
     bitStream fluxoBrutoDeBits;
 
     switch (tipoDeCodificacao) {
@@ -82,6 +80,7 @@ void CamadaFisicaTransmissora(std::string quadro) {
             break;
         case CODIFICACAO_MANCHESTER:
             std::cout << "Utilizando codificação manchester!" << std::endl;
+            fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoManchester(quadro);
             break;
         case CODIFICACAO_BIPOLAR:
             std::cout << "Utilizando codificação bipolar!" << std::endl;
@@ -109,3 +108,27 @@ std::string CamadaFisicaReceptoraDecodificacaoBinaria(bitStream bits) {
 bitStream CamadaFisicaTransmissoraCodificacaoBinaria(std::string quadro) {
     return toBinary(quadro);
 }
+
+bitStream CamadaFisicaTransmissoraCodificacaoManchester(std::string quadro) {
+    bitStream output;
+    bitStream message = toBinary(quadro);
+
+    for (auto &byte : message) {
+        std::bitset<8> highHalf;
+        std::bitset<8> lowHalf;
+
+        for (int i = 7; i >= 0; i--)
+            highHalf[i] = i % 2 == byte[4 + i/2];
+
+        for (int i = 7; i >= 0; i--)
+            lowHalf[i] = i % 2 == byte[i/2];
+
+        output.insert(output.end(), highHalf);
+        output.insert(output.end(), lowHalf);
+
+        return output;
+    }
+
+    return output;
+}
+
