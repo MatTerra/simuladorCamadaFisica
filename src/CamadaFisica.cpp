@@ -22,6 +22,8 @@ void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
             break;
         case CODIFICACAO_MANCHESTER:
             std::cout << "Utilizando decodificação manchester!" << std::endl;
+            mensagemDecodificada = CamadaFisicaReceptoraDecodificacaoManchester(
+                    fluxoBrutoDeBits);
             break;
         case CODIFICACAO_BIPOLAR:
             std::cout << "Utilizando decodificação bipolar!" << std::endl;
@@ -103,6 +105,17 @@ void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits) {
 
 std::string CamadaFisicaReceptoraDecodificacaoBinaria(bitStream bits) {
     return fromBinary(bits);
+}
+
+std::string CamadaFisicaReceptoraDecodificacaoManchester(bitStream bytes) {
+    std::string output;
+
+    for(auto &byte : bytes) {
+        for(int i = 7; i >= 0; i -= 2)
+            output += std::to_string((i % 2) == byte[i]);
+    }
+
+    return output;
 }
 
 bitStream CamadaFisicaTransmissoraCodificacaoBinaria(std::string quadro) {
