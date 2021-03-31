@@ -10,7 +10,7 @@ void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits);
 void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
     int tipoDeDecodificacao = CODIFICAO_ESCOLHIDA;
     std::string mensagemDecodificada;
-    
+
     std::cout << "Camada física receptora recebeu o seguinte fluxo de bits: ";
     for (auto &byte : fluxoBrutoDeBits)
         std::cout << byte << " ";
@@ -97,12 +97,21 @@ std::string CamadaFisicaReceptoraDecodificacaoManchester(bitStream bytes) {
     bool high=true;
     std::bitset<8> decodedByte;
 
+    int bitIndex = 7;
+
+
     for(auto &byte : bytes) {
-        for(int i = 7; i >= 0; i -= 2)
-            output += std::to_string((i % 2) == byte[i]);
+        for(int i = 7; i >= 0; i -= 2) {
+            decodedByte[bitIndex--] = byte[i];
+        }
+        if(!high){
+            decoded.insert(decoded.end(), decodedByte);
+            bitIndex = 7;
+        }
+        high = !high;
     }
 
-    return output;
+    return fromBinary(decoded);
 }
 
 bitStream CamadaFisicaTransmissoraCodificacaoBinaria(std::string quadro) {
@@ -119,6 +128,33 @@ bitStream CamadaFisicaTransmissoraCodificacaoManchester(std::string quadro) {
 
         for (int i = 7; i >= 0; i--)
             highHalf[i] = i % 2 == byte[4 + i/2];
+
+        for (int i = 7; i >= 0; i--)
+            lowHalf[i] = i % 2 == byte[i/2];
+
+        output.insert(output.end(), highHalf);
+        output.insert(output.end(), lowHalf);
+    }
+
+    return output;
+}
+
+bitStream CamadaFisicaTransmissoraCodificacaoBipolar(std::string quadro) {
+    bitStream output;
+    bitStream message = toBinary(quadro);
+    bool positive= true;
+
+    for (auto &byte : message) {
+        std::bitset<8> highHalf;
+        std::bitset<8> lowHalf;
+
+        for (int i = 7; i >= 0; i--)
+            if(byte[4 + i/2] == 1 && positive){
+                highHalf[i] = 0;
+                highHalf[i+1] = 1;
+                positive = !positve;
+            }
+
 
         for (int i = 7; i >= 0; i--)
             lowHalf[i] = i % 2 == byte[i/2];
