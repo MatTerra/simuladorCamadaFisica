@@ -15,7 +15,7 @@ std::string CamadaFisicaReceptoraDecodificacaoBipolar(bitStream bytes) {
             decoded.insert(decoded.end(), decodedByte);
             bitIndex = 7;
         }
-    }
+    }std::bitset<8> decodeHalfByte(std::bitset<8> &decodedByte, std::bitset<8> byte, int bitIndex)
 
     return fromBinary(decoded);
 }

@@ -23,22 +23,24 @@ bitStream CamadaFisicaTransmissoraCodificacaoManchester(std::string quadro) {
 
 std::string CamadaFisicaReceptoraDecodificacaoManchester(bitStream bytes) {
     bitStream decoded;
-    std::bitset<8> decodedByte;
-
-    int bitIndex = 7;
-
-
-    for(auto &byte : bytes) {
-        for(int i = 7; i >= 0; i -= 2) {
-            decodedByte[bitIndex--] = byte[i];
-        }
-        if(bitIndex<=0){
-            decoded.insert(decoded.end(), decodedByte);
-            bitIndex = 7;
-        }
+    for(int i = 0; i < bytes.size(); i += 2){
+        decoded.insert(decoded.end(), decodeByte(bytes.at(i), bytes.at(i+1)));
     }
-
     return fromBinary(decoded);
 }
 
-s
+std::bitset<8> decodeByte(std::bitset<8> highByte, std::bitset<8> lowByte ){
+    std::bitset<8> decodedByte;
+    decodeHalfByte(decodedByte, highByte, 7);
+    decodeHalfByte(decodedByte, lowByte, 3);
+    return decodedByte;
+}
+
+std::bitset<8> decodeHalfByte(std::bitset<8> &decodedByte, std::bitset<8> byte, int bitIndex){
+    for(int i = 7; i >= 0; i -= 2) {
+        decodedByte[bitIndex--] = byte[i];
+    }
+    return decodedByte;
+}
+
+
