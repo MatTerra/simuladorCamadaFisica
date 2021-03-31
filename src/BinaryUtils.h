@@ -2,8 +2,8 @@
 // Created by mateusberardo on 31/03/2021.
 //
 
-#ifndef SIMULADORCAMADAFISICA_BINARY_UTILS_H
-#define SIMULADORCAMADAFISICA_BINARY_UTILS_H
+#ifndef SIMULADORCAMADAFISICA_BINARYUTILS_H
+#define SIMULADORCAMADAFISICA_BINARYUTILS_H
 
 #include <bitset>
 #include <vector>
@@ -14,4 +14,4 @@ bitStream toBinary(std::string input);
 
 std::string fromBinary(bitStream bits);
 
-#endif //SIMULADORCAMADAFISICA_BINARY_UTILS_H
+#endif //SIMULADORCAMADAFISICA_BINARYUTILS_H

@@ -1,7 +1,7 @@
 //
 // Created by mateusberardo on 31/03/2021.
 //
-#include "binary_utils.h"
+#include "BinaryUtils.h"
 
 bitStream toBinary(std::string input) {
     bitStream output;

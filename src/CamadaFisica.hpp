@@ -6,16 +6,16 @@
 #include <vector>
 #include <iostream>
 
-#include "binary_utils.h"
+#include "BinaryUtils.h"
+#include "CodificacaoBinaria.hpp"
+#include "CodificacaoManchester.hpp"
+#include "CodificacaoBipolar.hpp"
 
 #define CODIFICACAO_BINARIA 0
 #define CODIFICACAO_MANCHESTER 1
 #define CODIFICACAO_BIPOLAR 2
 
-
-#define HIGH_BYTE_HALF true
-
-#define LOW_BYTE_HALF false
+#define CODIFICAO_ESCOLHIDA CODIFICACAO_BINARIA
 
 void CamadaDeAplicacaoReceptora(std::string mensagem);
 
@@ -28,31 +28,10 @@ void MeioDeComunicacao(bitStream bits);
 void transmit(bitStream &fluxoBrutoDeBitsPontoA,
               bitStream &fluxoBrutoDeBitsPontoB);
 
-bitStream CamadaFisicaTransmissoraCodificacaoBinaria(std::string quadro);
-bitStream CamadaFisicaTransmissoraCodificacaoManchester(std::string quadro);
-bitStream CamadaFisicaTransmissoraCodificacaoBipolar(std::string quadro);
-
-std::string CamadaFisicaReceptoraDecodificacaoBinaria(bitStream bits);
-std::string CamadaFisicaReceptoraDecodificacaoManchester(bitStream bits);
-std::string CamadaFisicaReceptoraDecodificacaoBipolar(bitStream bits);
-
-unsigned long getStringBinarySize(const std::string &quadro);
 void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits);
 
-void CamadaDeAplicacaoReceptora(std::string mensagem);
+void mostrarProcessamentoCamadaFisicaReceptora(bitStream &fluxoBrutoDeBits);
 
-void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits);
-
-std::bitset<8> &
-addOneBipolarRepresentation(std::bitset<8> &input, bool positive, int bitIndex);
-
-std::bitset<8> &
-addZeroBipolarRepresentation(std::bitset<8> &input, int bitIndex);
-
-void addBitBipolarRepresentation(bool bit, int bitIndex, bool &positive,
-                                 std::bitset<8> &output);
-
-std::bitset<8>
-bipolarEncodeHalfByte(std::bitset<8> &byte, bool &positive, bool high);
+void mostrarFluxoBrutoDeBits(bitStream &fluxoBrutoDeBits);
 
 #endif
