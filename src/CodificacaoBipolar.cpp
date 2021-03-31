@@ -1,23 +1,33 @@
 #include "CodificacaoBipolar.hpp"
 
-std::string CamadaFisicaReceptoraDecodificacaoBipolar(bitStream bytes) {
-    bitStream decoded;
+std::string CamadaFisicaReceptoraDecodificacaoBipolar(bitStream encodedBytes) {
+    bitStream decodedBytes;
+
+    for(int i = 0; i < encodedBytes.size(); i += 2)
+        decodedBytes.insert(decodedBytes.end(),
+                            decodeByteBipolar(encodedBytes.at(i),
+                                              encodedBytes.at(i + 1)));
+
+    return fromBinary(decodedBytes);
+}
+
+std::bitset<8> decodeByteBipolar(std::bitset<8> highByte, std::bitset<8> lowByte){
     std::bitset<8> decodedByte;
 
-    int bitIndex = 7;
+    decodedByte = decodeHalfByteBipolar(decodedByte, highByte, HIGH_BYTE_HALF);
+    decodedByte = decodeHalfByteBipolar(decodedByte, lowByte, LOW_BYTE_HALF);
 
+    return decodedByte;
+}
 
-    for(auto &byte : bytes) {
-        for(int i = 7; i >= 0; i -= 2) {
-            decodedByte[bitIndex--] = byte[i] || byte[i-1];
-        }
-        if(bitIndex<=0){
-            decoded.insert(decoded.end(), decodedByte);
-            bitIndex = 7;
-        }
-    }std::bitset<8> decodeHalfByte(std::bitset<8> &decodedByte, std::bitset<8> byte, int bitIndex)
+std::bitset<8> decodeHalfByteBipolar(std::bitset<8> &decodedByte,
+                                     std::bitset<8> byte, bool isHighHalf){
+    int bitIndex = isHighHalf ? 7 : 3;
 
-    return fromBinary(decoded);
+    for(int i = 7; i >= 0; i -= 2)
+        decodedByte[bitIndex--] = byte[i] || byte[i-1];
+
+    return decodedByte;
 }
 
 bitStream CamadaFisicaTransmissoraCodificacaoBipolar(std::string quadro) {
@@ -28,7 +38,6 @@ bitStream CamadaFisicaTransmissoraCodificacaoBipolar(std::string quadro) {
     for (auto &byte : message) {
         output.insert(output.end(),
                       bipolarEncodeHalfByte(byte, positive, HIGH_BYTE_HALF));
-
         output.insert(output.end(),
                       bipolarEncodeHalfByte(byte, positive, LOW_BYTE_HALF));
     }

@@ -8,6 +8,9 @@
 #include <bitset>
 #include <vector>
 
+#define HIGH_BYTE_HALF true
+#define LOW_BYTE_HALF false
+
 typedef std::vector<std::bitset<8>> bitStream;
 
 bitStream toBinary(std::string input);
