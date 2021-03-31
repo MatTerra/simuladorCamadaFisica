@@ -38,4 +38,20 @@ std::string CamadaFisicaReceptoraDecodificacaoManchester(bitStream bits);
 unsigned long getStringBinarySize(const std::string &quadro);
 void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits);
 
+void CamadaDeAplicacaoReceptora(std::string mensagem);
+
+void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits);
+
+std::bitset<8> &
+addOneBipolarRepresentation(std::bitset<8> &input, bool positive, int bitIndex);
+
+std::bitset<8> &
+addZeroBipolarRepresentation(std::bitset<8> &input, int bitIndex);
+
+void addBitBipolarRepresentation(bool bit, int bitIndex, bool &positive,
+                                 std::bitset<8> &output);
+
+std::bitset<8>
+bipolarEncodeHalfByte(std::bitset<8> &byte, bool &positive, bool high);
+
 #endif

@@ -3,22 +3,6 @@
 #define CODIFICAO_ESCOLHIDA 2
 
 
-void CamadaDeAplicacaoReceptora(std::string mensagem);
-
-void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits);
-
-std::bitset<8> &
-addOneBipolarRepresentation(std::bitset<8> &input, bool positive, int bitIndex);
-
-std::bitset<8> &
-addZeroBipolarRepresentation(std::bitset<8> &input, int bitIndex);
-
-void addBitBipolarRepresentation(bool bit, int bitIndex, bool &positive,
-                                 std::bitset<8> &output);
-
-std::bitset<8>
-bipolarEncodeHalfByte(std::bitset<8> &byte, bool &positive, bool high);
-
 void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
     int tipoDeDecodificacao = CODIFICAO_ESCOLHIDA;
     std::string mensagemDecodificada;
