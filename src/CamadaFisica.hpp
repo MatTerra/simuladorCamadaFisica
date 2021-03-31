@@ -13,6 +13,10 @@
 #define CODIFICACAO_BIPOLAR 2
 
 
+#define HIGH_BYTE_HALF true
+
+#define LOW_BYTE_HALF false
+
 void CamadaDeAplicacaoReceptora(std::string mensagem);
 
 void CamadaFisicaTransmissora(std::string quadro);
