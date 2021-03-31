@@ -34,6 +34,7 @@ bitStream CamadaFisicaTransmissoraCodificacaoBipolar(std::string quadro);
 
 std::string CamadaFisicaReceptoraDecodificacaoBinaria(bitStream bits);
 std::string CamadaFisicaReceptoraDecodificacaoManchester(bitStream bits);
+std::string CamadaFisicaReceptoraDecodificacaoBipolar(bitStream bits);
 
 unsigned long getStringBinarySize(const std::string &quadro);
 void mostrarProcessamentoCamadaFisicaTransmissora(bitStream &fluxoBrutoDeBits);
