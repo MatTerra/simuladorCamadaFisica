@@ -11,7 +11,11 @@
 #define HIGH_BYTE_HALF true
 #define LOW_BYTE_HALF false
 
+#define FRAME_SIZE 4
+
 typedef std::vector<std::bitset<8>> bitStream;
+
+typedef std::bitset<8> frame[FRAME_SIZE];
 
 bitStream toBinary(std::string input);
 
