@@ -24,9 +24,8 @@ std::string getUserMessage() {
 
 void CamadaDeAplicacaoTransmissora(const std::string& message) {
     std::cout << "Aplicação Transmissora passando a seguinte mensagem "
-              << "para a camada física: <" << message << ">" << std::endl;
+              << "para a camada de enlace: <" << message << ">" << std::endl;
     CamadaEnlaceDadosTransmissora(message);
-//    CamadaFisicaTransmissora(message);
 }
 
 int main() {

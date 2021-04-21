@@ -16,12 +16,18 @@ void CamadaEnlaceDadosTransmissora(std::string mensagem);
 
 void CamadaEnlaceDadosTransmissoraEnquadramento(std::string mensagem);
 
-void CamadaEnlaceDadosReceptora(std::vector<frame> quadros);
+void CamadaEnlaceDadosReceptora(std::string mensagem);
 
-void CamadaEnlaceDadosReceptoraEnquadramento(std::vector<frame> quadros);
+void CamadaEnlaceDadosReceptoraEnquadramento(std::string mensagem);
 
-std::vector<frame> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(std::string mensagem);
+std::string CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(std::string mensagem);
 
-std::vector<frame> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(std::string mensagem);
+std::string CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(std::string mensagem);
+
+void mostrarQuadros(std::string quadros);
+
+void mostrarProcessamentoCamadaEnlaceTransmissora(std::string quadros);
+
+unsigned int getFrameSize(unsigned int quantidadeDeQuadros, unsigned int lastFrameSize, int i);
 
 #endif
