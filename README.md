@@ -33,15 +33,7 @@ Você pode copiar o executável para a pasta que deseja utilizar o simulador e e
 ```
 ./simuladorCamadaFisica
 ```
-<!--
-## Running Unit Tests
 
-The project was developed through an TDD approach, thus, it contains a thorough test suite, which is built with the executable. To run it, access the tests folder in the build directory and run the following command:
-
-```
-./simulador_tst
-```
--->
 ## Ferramentas de build
 
 * [CMake](https://cmake.org/)

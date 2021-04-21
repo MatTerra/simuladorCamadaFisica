@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "CamadaFisica.hpp"
+#include "CamadaEnlace.hpp"
 
 
 std::string getUserMessage();
@@ -24,7 +25,8 @@ std::string getUserMessage() {
 void CamadaDeAplicacaoTransmissora(const std::string& message) {
     std::cout << "Aplicação Transmissora passando a seguinte mensagem "
               << "para a camada física: <" << message << ">" << std::endl;
-    CamadaFisicaTransmissora(message);
+    CamadaEnlaceDadosTransmissora(message);
+//    CamadaFisicaTransmissora(message);
 }
 
 int main() {
