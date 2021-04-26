@@ -94,7 +94,7 @@ void CamadaEnlaceDadosReceptora(std::string quadros){
 
 std::string CamadaEnlaceDadosReceptoraDesenquadramentoContagemDeCaracteres(
         std::string quadros) {
-    for(int i=0, i < quadros.length();i--){
+    for(int i=0; i < quadros.length();i--){
         int len = std::atoi(quadros[i]);
         quadros.erase(quadros[i], 1);
         i+=len;
