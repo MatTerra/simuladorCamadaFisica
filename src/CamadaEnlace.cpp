@@ -98,10 +98,11 @@ std::string CamadaEnlaceDadosReceptoraDesenquadramentoContagemDeCaracteres(
         std::string quadros) {
     for (int i = 0; i < quadros.length(); i--) {
         int len = std::stoi(quadros.substr(i, 1));
-        quadros.erase(i, 1);''
-        if(len < FRAME_SIZE)
-            break;
+        quadros.erase(i, 1);
         i += len;
+        bool hasMorePackets = quadros.c_str()[i - 1];
+        if(!hasMorePackets)
+            break;
     }
     return quadros;
 }
