@@ -31,6 +31,8 @@ std::string CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(std::
     return mensagem;
 }
 
+
+
 unsigned int getLastFrameSize(const std::string &mensagem) {
     return (mensagem.length() % (FRAME_SIZE - 1) != 0)
            ? ((mensagem.length() % (FRAME_SIZE - 1)) + 1)
@@ -73,7 +75,7 @@ unsigned int getFrameSize(unsigned int quantidadeDeQuadros, unsigned int lastFra
             ? lastFrameSize : FRAME_SIZE);
 }
 
-void CamadaEnlaceDadosReceptora(std::string quadros){
+void CamadaEnlaceDadosReceptora(std::string quadros) {
     std::string mensagem;
 
     mostrarProcessamentoCamadaEnlaceReceptora(quadros);
@@ -89,15 +91,29 @@ void CamadaEnlaceDadosReceptora(std::string quadros){
     }
     // Verificacao de erros
 
-    CamadaDeAplicacaoReceptora(quadros);
+    CamadaDeAplicacaoReceptora(mensagem);
 }
 
 std::string CamadaEnlaceDadosReceptoraDesenquadramentoContagemDeCaracteres(
         std::string quadros) {
-    for(int i=0; i < quadros.length();i--){
-        int len = std::atoi(quadros[i]);
-        quadros.erase(quadros[i], 1);
-        i+=len;
+    for (int i = 0; i < quadros.length(); i--) {
+        int len = std::stoi(quadros.substr(i, 1));
+        quadros.erase(i, 1);''
+        if(len < FRAME_SIZE)
+            break;
+        i += len;
+    }
+    return quadros;
+}
+
+std::string CamadaEnlaceDadosReceptoraDesenquadramentoInserçãoDeBits(
+        std::string quadros) {
+    for (int i = 0; i < quadros.length(); i--) {
+        int len = std::stoi(quadros.substr(i, 1));
+        quadros.erase(i, 1);
+        if(len < FRAME_SIZE)
+            break;
+        i += len;
     }
     return quadros;
 }
