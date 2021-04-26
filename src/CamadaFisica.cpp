@@ -1,4 +1,5 @@
 #include "CamadaFisica.hpp"
+#include "CamadaEnlace.hpp"
 
 void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
     int tipoDeDecodificacao = CODIFICAO_ESCOLHIDA;
@@ -24,7 +25,7 @@ void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
             break;
     }
 
-    CamadaDeAplicacaoReceptora(mensagemDecodificada);
+    CamadaEnlaceDadosReceptora(mensagemDecodificada);
 }
 
 void CamadaDeAplicacaoReceptora(std::string mensagem) {
