@@ -11,7 +11,7 @@
 #define HIGH_BYTE_HALF true
 #define LOW_BYTE_HALF false
 
-#define FRAME_SIZE 4
+#define FRAME_SIZE 8
 
 typedef std::vector<std::bitset<8>> bitStream;
 

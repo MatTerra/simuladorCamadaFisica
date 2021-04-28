@@ -11,12 +11,12 @@
 #define PROTOCOLO_CONTAGEM_DE_CARACTERES 0
 #define PROTOCOLO_INSERCAO_DE_BYTES 1
 
-#define PROTOCOLO_ENLACE_ESCOLHIDO PROTOCOLO_INSERCAO_DE_BYTES
+#define PROTOCOLO_ENLACE_ESCOLHIDO PROTOCOLO_CONTAGEM_DE_CARACTERES
 
 #if PROTOCOLO_ENLACE_ESCOLHIDO == PROTOCOLO_CONTAGEM_DE_CARACTERES
-#   define EFFECTIVE_FRAME_SIZE (FRAME_SIZE-1)
+#   define EFFECTIVE_FRAME_SIZE (FRAME_SIZE - 1)
 #elif PROTOCOLO_ENLACE_ESCOLHIDO == PROTOCOLO_INSERCAO_DE_BYTES
-#   define EFFECTIVE_FRAME_SIZE (FRAME_SIZE-2)
+#   define EFFECTIVE_FRAME_SIZE (FRAME_SIZE - 2)
 #endif
 
 void CamadaEnlaceDadosTransmissora(std::string mensagem);
@@ -31,18 +31,22 @@ std::string CamadaEnlaceDadosReceptoraDesenquadramentoContagemDeCaracteres(std::
 
 std::string CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(std::string mensagem);
 
+std::string CamadaEnlaceDadosReceptoraDesenquadramentoInsercaoDeBytes(std::string quadros);
+
 std::string CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(std::string mensagem);
 
 void mostrarQuadros(std::string quadros);
 
 void mostrarProcessamentoCamadaEnlaceTransmissora(std::string quadros);
 
-unsigned int getFrameSize(unsigned int quantidadeDeQuadros, unsigned int lastFrameSize, int i);
+unsigned short getFrameSize(unsigned int quantidadeDeQuadros, unsigned int lastFrameSize, int i);
 
 unsigned int getAmountOfFrames(const std::string &mensagem);
 
 bool isLastFrame(unsigned int quantidadeDeQuadros, int i);
 
 unsigned int getLastFrameSize(const std::string &mensagem);
+
+int getNextSeparatorIndex(int i, std::string quadros);
 
 #endif
