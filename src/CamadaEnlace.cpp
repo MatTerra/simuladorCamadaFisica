@@ -51,10 +51,17 @@ unsigned int getAmountOfFrames(const std::string &mensagem) {
     return fullFrames + (hasPartialFrame);
 }
 
+unsigned int getAmountOfProcessedFrames(const std::string &mensagem) {
+    unsigned int fullFrames = mensagem.length() / FRAME_SIZE;
+    bool hasPartialFrame = mensagem.length() % FRAME_SIZE > 0;
+    return fullFrames + (hasPartialFrame);
+}
+
+
 void mostrarQuadros(std::string quadros) {
-    unsigned int quantidadeDeQuadros = getAmountOfFrames(quadros);
+    unsigned int quantidadeDeQuadros = getAmountOfProcessedFrames(quadros);
     unsigned int lastFrameSize = getLastFrameSize(quadros);
-    for (int i = 0; i < quantidadeDeQuadros - 1; i++) {
+    for (int i = 0; i < quantidadeDeQuadros; i++) {
         std::cout << quadros.substr(i * FRAME_SIZE, getFrameSize(quantidadeDeQuadros, lastFrameSize, i)) << " ";
     }
 
@@ -123,9 +130,12 @@ std::string CamadaEnlaceDadosReceptoraDesenquadramentoInserçãoDeBits(
 std::string CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(std::string mensagem) {
     unsigned int frameAmount = getAmountOfFrames(mensagem);
     unsigned int lastFrameSize = getLastFrameSize(mensagem);
+    mensagem += GROUP_SEPARATOR;
     for (int i = 0; i < frameAmount; i++) {
         auto frameStart = mensagem.begin() + (i * FRAME_SIZE);
         mensagem.insert(frameStart, GROUP_SEPARATOR);
+        if( (i+1) == frameAmount)
+            break;
         mensagem.insert(frameStart + (getFrameSize(frameAmount, lastFrameSize, i)-1),
                 GROUP_SEPARATOR);
     }
