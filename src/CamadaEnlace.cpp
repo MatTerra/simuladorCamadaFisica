@@ -14,6 +14,8 @@ void CamadaEnlaceDadosTransmissoraEnquadramento(std::string mensagem) {
             break;
         case PROTOCOLO_INSERCAO_DE_BYTES:
             // inserção de bytes
+            std::cout << "Utilizando protocolo de inserção de bytes!" << std::endl;
+            quadros = CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(mensagem);
             break;
     }
     // Verificacao de erros
@@ -34,8 +36,8 @@ std::string CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(std::
 
 
 unsigned int getLastFrameSize(const std::string &mensagem) {
-    return (mensagem.length() % (FRAME_SIZE - 1) != 0)
-           ? ((mensagem.length() % (FRAME_SIZE - 1)) + 1)
+    return (mensagem.length() % EFFECTIVE_FRAME_SIZE != 0)
+           ? ((mensagem.length() % EFFECTIVE_FRAME_SIZE) + (FRAME_SIZE-EFFECTIVE_FRAME_SIZE))
            : FRAME_SIZE;
 }
 
@@ -44,9 +46,8 @@ bool isLastFrame(unsigned int quantidadeDeQuadros, int i) {
 }
 
 unsigned int getAmountOfFrames(const std::string &mensagem) {
-    int frameEffectiveSize = FRAME_SIZE - 1;
-    unsigned int fullFrames = mensagem.length() / frameEffectiveSize;
-    bool hasPartialFrame = mensagem.length() % frameEffectiveSize > 0;
+    unsigned int fullFrames = mensagem.length() / EFFECTIVE_FRAME_SIZE;
+    bool hasPartialFrame = mensagem.length() % EFFECTIVE_FRAME_SIZE > 0;
     return fullFrames + (hasPartialFrame);
 }
 
@@ -119,4 +120,15 @@ std::string CamadaEnlaceDadosReceptoraDesenquadramentoInserçãoDeBits(
     return quadros;
 }
 
-std::string CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(std::string mensagem);
+std::string CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(std::string mensagem) {
+    unsigned int frameAmount = getAmountOfFrames(mensagem);
+    unsigned int lastFrameSize = getLastFrameSize(mensagem);
+    for (int i = 0; i < frameAmount; i++) {
+        auto frameStart = mensagem.begin() + (i * FRAME_SIZE);
+        mensagem.insert(frameStart, GROUP_SEPARATOR);
+        mensagem.insert(frameStart + (getFrameSize(frameAmount, lastFrameSize, i)-1),
+                GROUP_SEPARATOR);
+    }
+
+    return mensagem;
+};
