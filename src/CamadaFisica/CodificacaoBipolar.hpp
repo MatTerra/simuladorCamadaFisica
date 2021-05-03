@@ -1,7 +1,7 @@
 #ifndef CODIFICACAO_BIPOLAR_H
 #define CODIFICACAO_BIPOLAR_H
 
-#include "BinaryUtils.h"
+#include "../BinaryUtils.h"
 
 bitStream CamadaFisicaTransmissoraCodificacaoBipolar(std::string quadro);
 

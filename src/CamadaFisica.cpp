@@ -28,11 +28,6 @@ void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
     CamadaEnlaceDadosReceptora(mensagemDecodificada);
 }
 
-void CamadaDeAplicacaoReceptora(std::string mensagem) {
-    std::cout << "Aplicação receptora recebeu a seguinte mensagem: "
-              << '<'<< mensagem << '>' << std::endl;
-}
-
 void transmit(bitStream &fluxoBrutoDeBitsPontoA,
               bitStream &fluxoBrutoDeBitsPontoB) {
     fluxoBrutoDeBitsPontoB = fluxoBrutoDeBitsPontoA;

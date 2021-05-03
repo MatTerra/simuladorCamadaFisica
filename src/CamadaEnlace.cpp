@@ -1,12 +1,17 @@
 #include "CamadaEnlace.hpp"
+#include "CamadaAplicacao.hpp"
+#include "CamadaEnlace/ControleDeErrosCRC.hpp"
 
 
 void CamadaEnlaceDadosTransmissora(std::string mensagem) {
-    CamadaEnlaceDadosTransmissoraEnquadramento(mensagem);
-    // CamadaEnlaceTransmissoraControleDeErro(quadro);
+    std::string quadros = CamadaEnlaceDadosTransmissoraEnquadramento(mensagem);
+    quadros = CamadaDeEnlaceTransmissoraControleDeErro(quadros);
+
+    mostrarProcessamentoCamadaEnlaceTransmissora(quadros);
+    CamadaFisicaTransmissora(quadros);
 };
 
-void CamadaEnlaceDadosTransmissoraEnquadramento(std::string mensagem) {
+std::string CamadaEnlaceDadosTransmissoraEnquadramento(std::string mensagem) {
     std::string quadros;
     switch (PROTOCOLO_ENLACE_ESCOLHIDO) {
         case PROTOCOLO_CONTAGEM_DE_CARACTERES:
@@ -19,22 +24,8 @@ void CamadaEnlaceDadosTransmissoraEnquadramento(std::string mensagem) {
             quadros = CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(mensagem);
             break;
     }
-    // Verificacao de erros
-    mostrarProcessamentoCamadaEnlaceTransmissora(quadros);
-    CamadaFisicaTransmissora(quadros);
+    return quadros;
 }
-
-std::string CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(std::string mensagem) {
-    unsigned int quantidadeDeQuadros = getAmountOfFrames(mensagem);
-    unsigned int lastFrameSize = getLastFrameSize(mensagem);
-    for (int i = 0; i < quantidadeDeQuadros; i++) {
-        mensagem.insert(mensagem.cbegin() + (i * FRAME_SIZE),
-                        getFrameSize(quantidadeDeQuadros, lastFrameSize, i));
-    }
-    return mensagem;
-}
-
-
 
 unsigned int getLastFrameSize(const std::string &mensagem) {
     return (mensagem.length() % EFFECTIVE_FRAME_SIZE != 0)
@@ -84,7 +75,7 @@ unsigned short getFrameSize(unsigned int quantidadeDeQuadros, unsigned int lastF
             ? lastFrameSize : FRAME_SIZE);
 }
 
-void CamadaEnlaceDadosReceptora(std::string quadros) {
+std::string CamadaEnlaceDadosReceptoraEnquadramento(std::string quadros) {
     std::string mensagem;
 
     mostrarProcessamentoCamadaEnlaceReceptora(quadros);
@@ -100,55 +91,25 @@ void CamadaEnlaceDadosReceptora(std::string quadros) {
             break;
     }
     // Verificacao de erros
+    return mensagem;
+}
 
+void CamadaEnlaceDadosReceptora(std::string quadros){
+    std::string mensagem = CamadaEnlaceDadosReceptoraEnquadramento(quadros);
     CamadaDeAplicacaoReceptora(mensagem);
 }
 
-std::string CamadaEnlaceDadosReceptoraDesenquadramentoContagemDeCaracteres(
-        std::string quadros) {
-    for (int i = 0; i < quadros.length(); i--) {
-        unsigned short len = quadros.substr(i, 1)[0];
-        quadros.erase(i, 1);
-        i += len;
-        bool hasMorePackets = quadros.c_str()[i - 1];
-        if(!hasMorePackets)
+std::string CamadaDeEnlaceTransmissoraControleDeErro(std::string quadros) {
+    switch (CONTROLE_DE_ERRO_ESCOLHIDO) {
+        case CONTROLE_DE_ERRO_BIT_PARIDADE_PAR:
+            std::cout << "Utilizando controle de erro paridade par!" << std::endl;
+            quadros = CamadaDeEnlaceTransmissoraControleDeErroBitParidadePar(quadros);
+            break;
+        case CONTROLE_DE_ERRO_CRC:
+            // inserção de bytes
+            std::cout << "Utilizando protocolo de inserção de bytes!" << std::endl;
+            quadros = CamadaDeEnlaceTransmissoraControleDeErroBitCRC(quadros);
             break;
     }
     return quadros;
 }
-
-std::string CamadaEnlaceDadosReceptoraDesenquadramentoInsercaoDeBytes(
-        std::string quadros) {
-    for (int i = 0; i < quadros.length();) {
-        quadros.erase(i, 1);
-        quadros.erase(getNextSeparatorIndex(i, quadros), 1);
-        i += EFFECTIVE_FRAME_SIZE;
-        bool hasMorePackets = quadros.c_str()[i - 1];
-        if(!hasMorePackets)
-            break;
-    }
-    return quadros;
-}
-
-int getNextSeparatorIndex(int i, std::string quadros) {
-    int nextSeparator = quadros.find(GROUP_SEPARATOR, i);
-    i += EFFECTIVE_FRAME_SIZE;
-    return i > nextSeparator ? nextSeparator : i;
-}
-
-
-std::string CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(std::string mensagem) {
-    unsigned int frameAmount = getAmountOfFrames(mensagem);
-    unsigned int lastFrameSize = getLastFrameSize(mensagem);
-    mensagem += GROUP_SEPARATOR;
-    for (int i = 0; i < frameAmount; i++) {
-        auto frameStart = mensagem.begin() + (i * FRAME_SIZE);
-        mensagem.insert(frameStart, GROUP_SEPARATOR);
-        if((i + 1) == frameAmount)
-            break;
-        mensagem.insert(frameStart + (getFrameSize(frameAmount, lastFrameSize, i) - 1),
-                GROUP_SEPARATOR);
-    }
-
-    return mensagem;
-};

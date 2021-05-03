@@ -1,7 +1,7 @@
 #ifndef CODIFICACAO_BINARIA_H
 #define CODIFICACAO_BINARIA_H
 
-#include "BinaryUtils.h"
+#include "../BinaryUtils.h"
 
 bitStream CamadaFisicaTransmissoraCodificacaoBinaria(std::string quadro);
 

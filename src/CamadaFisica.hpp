@@ -7,17 +7,15 @@
 #include <iostream>
 
 #include "BinaryUtils.h"
-#include "CodificacaoBinaria.hpp"
-#include "CodificacaoManchester.hpp"
-#include "CodificacaoBipolar.hpp"
+#include "CamadaFisica/CodificacaoBinaria.hpp"
+#include "CamadaFisica/CodificacaoManchester.hpp"
+#include "CamadaFisica/CodificacaoBipolar.hpp"
 
 #define CODIFICACAO_BINARIA 0
 #define CODIFICACAO_MANCHESTER 1
 #define CODIFICACAO_BIPOLAR 2
 
-#define CODIFICAO_ESCOLHIDA CODIFICACAO_MANCHESTER
-
-void CamadaDeAplicacaoReceptora(std::string mensagem);
+#define CODIFICAO_ESCOLHIDA CODIFICACAO_BINARIA
 
 void CamadaFisicaTransmissora(std::string quadro);
 
