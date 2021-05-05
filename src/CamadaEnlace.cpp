@@ -95,7 +95,7 @@ std::string CamadaEnlaceDadosReceptoraEnquadramento(std::string quadros) {
 }
 
 void CamadaEnlaceDadosReceptora(std::string quadros){
-    quadros = CamadaDeEnlaceReceptoraControleDeErroBitParidadePar(quadros);
+    quadros = CamadaEnlaceDadosReceptoraControleDeErro(quadros);
     std::string mensagem = CamadaEnlaceDadosReceptoraEnquadramento(quadros);
     CamadaDeAplicacaoReceptora(mensagem);
 }
@@ -112,5 +112,21 @@ std::string CamadaDeEnlaceTransmissoraControleDeErro(std::string quadros) {
             quadros = CamadaDeEnlaceTransmissoraControleDeErroBitCRC(quadros);
             break;
     }
+    return quadros;
+}
+
+std::string CamadaEnlaceDadosReceptoraControleDeErro(std::string quadros) {
+    switch (CONTROLE_DE_ERRO_ESCOLHIDO) {
+        case CONTROLE_DE_ERRO_BIT_PARIDADE_PAR:
+            std::cout << "Utilizando controle de erro paridade par!" << std::endl;
+            quadros = CamadaDeEnlaceReceptoraControleDeErroBitParidadePar(quadros);
+            break;
+        case CONTROLE_DE_ERRO_CRC:
+            // inserção de bytes
+            std::cout << "Utilizando protocolo de inserção de bytes!" << std::endl;
+            quadros = CamadaDeEnlaceReceptoraControleDeErroBitCRC(quadros);
+            break;
+    }
+    // Verificacao de erros
     return quadros;
 }

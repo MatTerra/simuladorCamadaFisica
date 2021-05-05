@@ -29,7 +29,8 @@
 void CamadaEnlaceDadosTransmissora(std::string mensagem);
 
 std::string CamadaEnlaceDadosTransmissoraEnquadramento(std::string mensagem);
-std::string CamadaDeEnlaceTransmissoraControleDeErro(std::string mensagem);
+std::string CamadaDeEnlaceTransmissoraControleDeErro(std::string quadros);
+std::string CamadaEnlaceDadosReceptoraControleDeErro(std::string quadros);
 
 void CamadaEnlaceDadosReceptora(std::string mensagem);
 
