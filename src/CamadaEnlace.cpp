@@ -95,6 +95,7 @@ std::string CamadaEnlaceDadosReceptoraEnquadramento(std::string quadros) {
 }
 
 void CamadaEnlaceDadosReceptora(std::string quadros){
+    quadros = CamadaDeEnlaceReceptoraControleDeErroBitParidadePar(quadros);
     std::string mensagem = CamadaEnlaceDadosReceptoraEnquadramento(quadros);
     CamadaDeAplicacaoReceptora(mensagem);
 }

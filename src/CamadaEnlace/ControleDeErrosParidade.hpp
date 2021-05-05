@@ -6,9 +6,11 @@
 #define SIMULADORCAMADAFISICA_CONTROLEDEERROSPARIDADE_HPP
 
 #include <string>
+#include <algorithm>
 
 std::string CamadaDeEnlaceTransmissoraControleDeErroBitParidadePar(std::string quadros);
 std::string CamadaDeEnlaceReceptoraControleDeErroBitParidadePar(std::string quadros);
+char getParity(char n);
 
 
 #endif //SIMULADORCAMADAFISICA_CONTROLEDEERROSPARIDADE_HPP
