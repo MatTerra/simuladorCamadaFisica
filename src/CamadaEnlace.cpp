@@ -5,9 +5,9 @@
 
 void CamadaEnlaceDadosTransmissora(std::string mensagem) {
     std::string quadros = CamadaEnlaceDadosTransmissoraEnquadramento(mensagem);
-    quadros = CamadaDeEnlaceTransmissoraControleDeErro(quadros);
-
     mostrarProcessamentoCamadaEnlaceTransmissora(quadros);
+
+    quadros = CamadaDeEnlaceTransmissoraControleDeErro(quadros);
     CamadaFisicaTransmissora(quadros);
 };
 

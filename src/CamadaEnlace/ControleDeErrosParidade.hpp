@@ -7,10 +7,12 @@
 
 #include <string>
 #include <algorithm>
+#include <iostream>
+
 
 std::string CamadaDeEnlaceTransmissoraControleDeErroBitParidadePar(std::string quadros);
 std::string CamadaDeEnlaceReceptoraControleDeErroBitParidadePar(std::string quadros);
-char getParity(char n);
+char getParity(unsigned char n);
 
 
 #endif //SIMULADORCAMADAFISICA_CONTROLEDEERROSPARIDADE_HPP
