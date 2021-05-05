@@ -5,6 +5,8 @@
 #ifndef SIMULADORCAMADAFISICA_CONTROLEDEERROSCRC_H
 #define SIMULADORCAMADAFISICA_CONTROLEDEERROSCRC_H
 
+#define POLINOMIO_CRC_32 0b100000100110000010001110110110111
+
 #include <string>
 
 std::string CamadaDeEnlaceTransmissoraControleDeErroBitCRC(std::string quadro);

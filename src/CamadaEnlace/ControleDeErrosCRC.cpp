@@ -3,3 +3,11 @@
 //
 #include "ControleDeErrosCRC.hpp"
 
+
+std::string CamadaDeEnlaceTransmissoraControleDeErroBitCRC(std::string quadro) {
+
+};
+
+std::string CamadaDeEnlaceReceptoraControleDeErroBitCRC(std::string quadro) {
+
+};

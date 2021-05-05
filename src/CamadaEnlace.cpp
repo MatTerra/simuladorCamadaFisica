@@ -108,7 +108,7 @@ std::string CamadaDeEnlaceTransmissoraControleDeErro(std::string quadros) {
             break;
         case CONTROLE_DE_ERRO_CRC:
             // inserção de bytes
-            std::cout << "Utilizando protocolo de inserção de bytes!" << std::endl;
+            std::cout << "Utilizando protocolo CRC" << std::endl;
             quadros = CamadaDeEnlaceTransmissoraControleDeErroBitCRC(quadros);
             break;
     }
@@ -122,8 +122,7 @@ std::string CamadaEnlaceDadosReceptoraControleDeErro(std::string quadros) {
             quadros = CamadaDeEnlaceReceptoraControleDeErroBitParidadePar(quadros);
             break;
         case CONTROLE_DE_ERRO_CRC:
-            // inserção de bytes
-            std::cout << "Utilizando protocolo de inserção de bytes!" << std::endl;
+            std::cout << "Utilizando protocolo CRC!" << std::endl;
             quadros = CamadaDeEnlaceReceptoraControleDeErroBitCRC(quadros);
             break;
     }
