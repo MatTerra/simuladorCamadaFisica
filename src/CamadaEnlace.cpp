@@ -1,6 +1,5 @@
 #include "CamadaEnlace.hpp"
 #include "CamadaAplicacao.hpp"
-#include "CamadaEnlace/ControleDeErrosCRC.hpp"
 
 
 void CamadaEnlaceDadosTransmissora(std::string mensagem) {
@@ -107,9 +106,12 @@ std::string CamadaDeEnlaceTransmissoraControleDeErro(std::string quadros) {
             quadros = CamadaDeEnlaceTransmissoraControleDeErroBitParidadePar(quadros);
             break;
         case CONTROLE_DE_ERRO_CRC:
-            // inserção de bytes
             std::cout << "Utilizando protocolo CRC" << std::endl;
             quadros = CamadaDeEnlaceTransmissoraControleDeErroBitCRC(quadros);
+            break;
+        case CONTROLE_DE_ERRO_HAMMING:
+            std::cout << "Utilizando o código de Hamming" << std::endl;
+            quadros = CamadaDeEnlaceTransmissoraControleDeErroHamming(quadros);
             break;
     }
     return quadros;

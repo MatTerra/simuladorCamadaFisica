@@ -9,6 +9,8 @@
 #include "CamadaEnlace/ProtocoloDeContagemDeCaracteres.hpp"
 #include "CamadaEnlace/ProtocoloInsercaoDeBytes.hpp"
 #include "CamadaEnlace/ControleDeErrosParidade.hpp"
+#include "CamadaEnlace/ControleDeErrosCRC.hpp"
+#include "CamadaEnlace/CorrecaoDeErros.hpp"
 
 #define GROUP_SEPARATOR 29
 #define PROTOCOLO_CONTAGEM_DE_CARACTERES 0
@@ -18,7 +20,8 @@
 
 #define CONTROLE_DE_ERRO_BIT_PARIDADE_PAR 0
 #define CONTROLE_DE_ERRO_CRC 1
-#define CONTROLE_DE_ERRO_ESCOLHIDO CONTROLE_DE_ERRO_CRC
+#define CONTROLE_DE_ERRO_HAMMING 2
+#define CONTROLE_DE_ERRO_ESCOLHIDO CONTROLE_DE_ERRO_HAMMING
 
 #if PROTOCOLO_ENLACE_ESCOLHIDO == PROTOCOLO_CONTAGEM_DE_CARACTERES
 #   define EFFECTIVE_FRAME_SIZE (FRAME_SIZE - 1)
