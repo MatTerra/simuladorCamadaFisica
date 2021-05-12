@@ -15,6 +15,6 @@
 
 std::string CamadaDeEnlaceTransmissoraControleDeErroHamming(std::string quadros);
 std::string CamadaDeEnlaceReceptoraControleDeErroHamming(std::string quadros);
-int calcularBitParidadeHamming(std::bitset<8> quadroComHamming, int i);
+bool makeSum(std::bitset<4> n);
 
 #endif //SIMULADORCAMADAFISICA_CORRECAODEERROS_H

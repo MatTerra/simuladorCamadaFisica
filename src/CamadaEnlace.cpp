@@ -127,6 +127,10 @@ std::string CamadaEnlaceDadosReceptoraControleDeErro(std::string quadros) {
             std::cout << "Utilizando protocolo CRC!" << std::endl;
             quadros = CamadaDeEnlaceReceptoraControleDeErroBitCRC(quadros);
             break;
+        case CONTROLE_DE_ERRO_HAMMING:
+            std::cout << "Utilizando o código de Hamming!" << std::endl;
+            quadros = CamadaDeEnlaceReceptoraControleDeErroHamming(quadros);
+            break;
     }
     // Verificacao de erros
     return quadros;

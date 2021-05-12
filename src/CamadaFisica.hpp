@@ -11,7 +11,7 @@
 #include "CamadaFisica/CodificacaoManchester.hpp"
 #include "CamadaFisica/CodificacaoBipolar.hpp"
 
-#define PORCENTAGEM_ERRO 20
+#define PORCENTAGEM_ERRO 0
 
 #define CODIFICACAO_BINARIA 0
 #define CODIFICACAO_MANCHESTER 1
