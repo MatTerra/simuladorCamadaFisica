@@ -10,12 +10,11 @@ std::string CamadaDeEnlaceTransmissoraControleDeErroBitParidadePar(std::string q
 }
 std::string CamadaDeEnlaceReceptoraControleDeErroBitParidadePar(std::string quadros){
     std::cout << "Verificando se ocorreram erros na transmissão" << std::endl;
-    for (unsigned char c : quadros){
-        if (getParity(c))
+    for (char & quadro : quadros){
+        if (getParity(quadro))
             std::cout << "Foi detectado um erro" << std::endl;
+        quadro = (unsigned char &) quadro >> 1;
     }
-    std::transform(quadros.begin(), quadros.end(), quadros.begin(),
-                   [](unsigned char c){ return (c>>1); });
     return quadros;
 }
 char getParity(unsigned char n) {
