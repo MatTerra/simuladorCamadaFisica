@@ -30,12 +30,11 @@ void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits) {
 
 void transmit(bitStream &fluxoBrutoDeBitsPontoA,
               bitStream &fluxoBrutoDeBitsPontoB) {
-    int erro;
     for (int j=0; j<fluxoBrutoDeBitsPontoA.size(); j++){
         fluxoBrutoDeBitsPontoB.insert(fluxoBrutoDeBitsPontoB.begin()+j,
                                       std::bitset<8>());
         for (int i=0; i<8; i++){
-            if((rand()%100) <= PORCENTAGEM_ERRO) {
+            if((rand()%100) < PORCENTAGEM_ERRO) {
                 fluxoBrutoDeBitsPontoB.at(j)[i] = !fluxoBrutoDeBitsPontoA.at(j)[i];
             }
             else
@@ -54,7 +53,7 @@ void MeioDeComunicacao(bitStream bits) {
 
 
 
-void CamadaFisicaTransmissora(std::string quadro) {
+void CamadaFisicaTransmissora(const std::string& quadro) {
     int tipoDeCodificacao = CODIFICAO_ESCOLHIDA;
     bitStream fluxoBrutoDeBits;
 

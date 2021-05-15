@@ -21,6 +21,6 @@ bitStream hammingEncodeByte(std::bitset<8> byte_);
 std::bitset<8> hammingDecodeByte(std::bitset<8> highByte, std::bitset<8> lowByte);
 std::bitset<8> hammingDecodeHalfByte(std::bitset<8> &decodedByte,
                                      std::bitset<8> byte_, bool isHighHalf);
-void hammingCheckByteErrors(std::bitset<8> byte_);
+void hammingCheckByteErrors(std::bitset<8> *byte_);
 
 #endif //SIMULADORCAMADAFISICA_CORRECAODEERROS_H

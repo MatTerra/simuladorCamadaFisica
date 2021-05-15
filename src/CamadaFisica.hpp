@@ -11,7 +11,7 @@
 #include "CamadaFisica/CodificacaoManchester.hpp"
 #include "CamadaFisica/CodificacaoBipolar.hpp"
 
-#define PORCENTAGEM_ERRO 0
+#define PORCENTAGEM_ERRO 10
 
 #define CODIFICACAO_BINARIA 0
 #define CODIFICACAO_MANCHESTER 1
@@ -19,7 +19,7 @@
 
 #define CODIFICAO_ESCOLHIDA CODIFICACAO_BINARIA
 
-void CamadaFisicaTransmissora(std::string quadro);
+void CamadaFisicaTransmissora(const std::string& quadro);
 
 void CamadaFisicaReceptora(bitStream fluxoBrutoDeBits);
 

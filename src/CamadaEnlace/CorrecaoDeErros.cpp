@@ -4,7 +4,7 @@
 
 #include "CorrecaoDeErros.hpp"
 
-bool checkHammingParity(const std::bitset<8> &byte_);
+std::bitset<4> checkHammingParity(const std::bitset<8> &byte_);
 
 std::string CamadaDeEnlaceTransmissoraControleDeErroHamming(std::string quadros) {
     bitStream quadrosEmBits = toBinary(quadros);
@@ -42,19 +42,19 @@ std::string CamadaDeEnlaceReceptoraControleDeErroHamming(std::string quadros) {
     bitStream decodedFrames;
 
     for (int i=0; i < binaryFrames.size(); i += 2)
-        decodedFrames.insert(decodedFrames.end(), hammingDecodeByte(binaryFrames[i],
-                                                                    binaryFrames[i+1]));
-
+        decodedFrames.insert(decodedFrames.end(),
+                             hammingDecodeByte(binaryFrames[i],
+                                               binaryFrames[i + 1]));
     return fromBinary(decodedFrames);
 }
 
 std::bitset<8> hammingDecodeByte(std::bitset<8> highByte, std::bitset<8> lowByte){
     std::bitset<8> decodedByte;
 
-    hammingCheckByteErrors(highByte);
+    hammingCheckByteErrors(&highByte);
     decodedByte = hammingDecodeHalfByte(decodedByte, highByte, true);
 
-    hammingCheckByteErrors(lowByte);
+    hammingCheckByteErrors(&lowByte);
     decodedByte = hammingDecodeHalfByte(decodedByte, lowByte, false);
 
     return decodedByte;
@@ -71,19 +71,28 @@ std::bitset<8> hammingDecodeHalfByte(std::bitset<8> &decodedByte,
     return decodedByte;
 }
 
-void hammingCheckByteErrors(std::bitset<8> byte_){
-    if (checkHammingParity(byte_) == 0)
-        std::cout << "Erro detectado!" << std::endl;
+void hammingCheckByteErrors(std::bitset<8> *byte_){
+
+    auto syndrome = checkHammingParity(*byte_);
+    if (syndrome != 0) {
+        if(!makeSum(*byte_)){
+            std::cout << "Erro duplo detectado!" << std::endl;
+        } else {
+            unsigned long errorPosition = (syndrome&std::bitset<4>(0b0111)).to_ulong() - 1;
+            std::cout << "Tentando corrigir um erro!" << std::endl;
+            byte_->flip((7 - errorPosition)%7);
+        }
+    }
 }
-//TODO mesmo com porcentagem de erro igual a 0 ainda existem erros independente da condição( == 0 ou != 0)
-bool checkHammingParity(const std::bitset<8> &byte_) {
+
+std::bitset<4> checkHammingParity(const std::bitset<8> &byte_) {
     std::bitset<8> parityMatrix[] = {0b10101010, 0b01100110, 0b00011110, 0b11111111};
     std::bitset<4> verificationNyble;
 
     for (size_t i = 0; i < 4; i++)
-        verificationNyble[3 - i] = makeSum(parityMatrix[i] & byte_);
+        verificationNyble[3-i] = makeSum(parityMatrix[3-i] & byte_);
 
-    return verificationNyble == 0;
+    return verificationNyble;
 }
 
 std::bitset<8> hammingEncodeHalfByte(std::bitset<4> halfByte){
