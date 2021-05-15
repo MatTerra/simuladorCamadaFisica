@@ -5,6 +5,7 @@
 #include <bitset>
 #include <vector>
 #include <iostream>
+#include "CamadaAplicacao.hpp"
 #include "CamadaFisica.hpp"
 #include "CamadaEnlace/ProtocoloDeContagemDeCaracteres.hpp"
 #include "CamadaEnlace/ProtocoloInsercaoDeBytes.hpp"
@@ -29,28 +30,25 @@
 #   define EFFECTIVE_FRAME_SIZE (FRAME_SIZE - 2)
 #endif
 
-void CamadaEnlaceDadosTransmissora(std::string mensagem);
+void CamadaEnlaceDadosTransmissora(const std::string& mensagem);
+void CamadaEnlaceDadosReceptora(std::string mensagem);
 
-std::string CamadaEnlaceDadosTransmissoraEnquadramento(std::string mensagem);
+
+std::string CamadaEnlaceDadosTransmissoraEnquadramento(const std::string& mensagem);
+std::string CamadaEnlaceDadosReceptoraEnquadramento(const std::string& quadros);
+
 std::string CamadaDeEnlaceTransmissoraControleDeErro(std::string quadros);
 std::string CamadaEnlaceDadosReceptoraControleDeErro(std::string quadros);
 
-void CamadaEnlaceDadosReceptora(std::string mensagem);
+void mostrarProcessamentoCamadaEnlaceTransmissora(const std::string& quadros);
+void mostrarProcessamentoCamadaEnlaceReceptora(const std::string& quadros);
 
-std::string CamadaEnlaceDadosReceptoraEnquadramento(std::string mensagem);
-
-void mostrarQuadros(std::string quadros);
-
-void mostrarProcessamentoCamadaEnlaceTransmissora(std::string quadros);
+void mostrarQuadros(const std::string& quadros);
 
 unsigned short getFrameSize(unsigned int quantidadeDeQuadros, unsigned int lastFrameSize, int i);
-
 unsigned int getAmountOfFrames(const std::string &mensagem);
-
 bool isLastFrame(unsigned int quantidadeDeQuadros, int i);
-
 unsigned int getLastFrameSize(const std::string &mensagem);
-
 int getNextSeparatorIndex(int i, std::string quadros);
 
 #endif
